@@ -52,7 +52,7 @@ RUN cd /opt \
 ARG COSMOS_REPO=https://github.com/M3ne/COSMOS.git
 
 # Download and setup COSMOS devel area
-RUN gem install bundler --no-document
+RUN gem install bundler -v 2.3.27 --no-document
 RUN cd /devel \
   && git clone -b develop ${COSMOS_REPO} COSMOS \
   && cd /devel/COSMOS \
