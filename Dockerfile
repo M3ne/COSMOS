@@ -33,15 +33,15 @@ RUN apt-get update -y && apt-get install -y \
   zlib1g-dev
 
 RUN gem install rake --no-document
-
+RUN mkdir devel
 # We require a local certificate file so set that up.
 # You must place a valid cert.pem file in your COSMOS development folder for this work
 # Comment out these lines if this is not required in your environment
-COPY cert.pem /devel/cert.pem
-ENV SSL_CERT_FILE /devel/cert.pem
-ENV CURL_CA_BUNDLE /devel/cert.pem
-ENV REQUESTS_CA_BUNDLE /devel/cert.pem
-RUN git config --global http.sslCAinfo /devel/cert.pem
+#   COPY cert.pem /devel/cert.pem
+#   ENV SSL_CERT_FILE /devel/cert.pem
+#   ENV CURL_CA_BUNDLE /devel/cert.pem
+#   ENV REQUESTS_CA_BUNDLE /devel/cert.pem
+#   RUN git config --global http.sslCAinfo /devel/cert.pem
 
 # Download and install jruby
 RUN cd /opt \
@@ -49,12 +49,12 @@ RUN cd /opt \
   && tar xvf jruby.tar.gz \
   && mv jruby-9.2.9.0 jruby
 
-ARG COSMOS_REPO=https://github.com/BallAerospace/COSMOS.git
+ARG COSMOS_REPO=https://github.com/M3ne/COSMOS.git
 
 # Download and setup COSMOS devel area
 RUN gem install bundler --no-document
 RUN cd /devel \
-  && git clone -b cosmos4 ${COSMOS_REPO} COSMOS \
+  && git clone -b develop ${COSMOS_REPO} COSMOS \
   && cd /devel/COSMOS \
   && bundle install
 
